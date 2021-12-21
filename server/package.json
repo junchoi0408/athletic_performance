@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --config nodemon.json index.ts"
+  },
+  "keywords": [],
+  "author": "junchoi0408",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/config": "^0.0.40",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.2"
+  }
+}
