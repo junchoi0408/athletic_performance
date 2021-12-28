@@ -1,0 +1,12 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.chart__container {
+    width: 375px;
+}
