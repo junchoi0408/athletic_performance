@@ -18,3 +18,11 @@ export const createWorkout = (newWorkout:WorkoutLog) => {
         console.log(error.message);
     }
 }
+
+export const updateWorkout = (newWorkout: WorkoutLog) => {
+    try {
+        axios.put(url, newWorkout);
+    } catch(error: any) {
+        console.log(error.message);
+    }
+}

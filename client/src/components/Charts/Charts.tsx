@@ -15,12 +15,12 @@ const Charts = (props: Props) => {
 
     return (
         <div className="chart__container">
-            <VictoryChart theme={VictoryTheme.material} >
+            <VictoryChart theme={VictoryTheme.material}>
                 <VictoryAxis 
                     tickFormat={(x) => new Date(x).getMonth() + 1 + '/' + new Date(x).getDate()}
                 />
                     <VictoryAxis dependentAxis
-                    tickFormat={(y) => y + ' lbs'}
+                    tickFormat={(y) => y + ' lb' }
                 />
                 <VictoryLine
                     scale={{ x: "time", y: "linear" }}
@@ -30,7 +30,7 @@ const Charts = (props: Props) => {
                     }}
                     domain={{
                         x: [minDate, maxDate],
-                        y: [minWeight-100, maxWeight+100]
+                        y: [minWeight-50, maxWeight+50]
                     }}
                     data={graphData}
                 />

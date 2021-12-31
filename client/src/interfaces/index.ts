@@ -2,11 +2,11 @@ export interface WorkoutInfo {
     set: Number;
     reps: Number;
     weight: Number;
-    unit: String;
+    
 }
 export interface WorkoutLog {
     name: String;
-    projectedMax: Number;
+    projectedMax: number;
     info: WorkoutInfo[];
     comments?: String;
     date: Date;

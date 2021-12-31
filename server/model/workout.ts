@@ -4,12 +4,11 @@ interface WorkoutInfo {
     set: Number;
     reps: Number;
     weight: Number;
-    unit: String;
 }
 
 export interface WorkoutLogDocument extends mongoose.Document {
     createdAt: Date;
-    name: string;
+    name: String;
     projectedMax: Number;
     comments?: String;
     info: WorkoutInfo[];
@@ -32,7 +31,7 @@ const workoutSchema = new mongoose.Schema(
         date: {
             type: Date,
             default: Date.now()
-        }
+        },
     }  
 );
 

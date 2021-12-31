@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { WorkoutInfo, WorkoutLog } from '../../interfaces';
-import { createWorkout, checkRecord } from '../../api';
+import { createWorkout, checkRecord, updateWorkout } from '../../api';
 import toast, { Toaster } from 'react-hot-toast';
 import './WorkoutForm.css'
-import { cp } from 'fs';
 
 const WorkoutForm = () => {
     const [numSet, setNumSet] = useState([1]);
@@ -19,7 +18,6 @@ const WorkoutForm = () => {
                 set: i+1,
                 reps: d[`workoutReps${i+1}`],
                 weight: d[`workoutWeight${i+1}`],
-                unit: d.unit,
             }
             
             temp.push(data);
@@ -27,34 +25,39 @@ const WorkoutForm = () => {
 
         const name: String = d.name;
         const date: Date = d.date;
-        const projectedMax: Number = d.projectedMax;
+        const projectedMax: number = d.projectedMax;
         const comments: String = d.comments;
 
         const newData: WorkoutLog = {
-            date: date,
-            name: name,
-            projectedMax: projectedMax,
-            comments: comments,
+            date,
+            name,
+            projectedMax,
+            comments,
             info: temp,
         };
         
 
         try { 
             const { data } = await checkRecord({ name, date });
+            
             if (data.length > 0) {
-                toast.error('Workout already exists!');
+                const answer = window.confirm("The workout already exists, would you like to overwrite the existing workout?");
+                if (answer) {
+                    await updateWorkout(newData);
+                    toast.success('Workout updated!');
+                } else {
+                    toast.error('Workout already exists!');
+                }
             } else { 
                 createWorkout(newData);
                 toast.success('Saved Successfully');
-                reset();
-                setNumSet([1]);
-                temp = []
             }
-            
         } catch (error: any) {
             toast.error('Something went wrong');
         }
-
+        reset();
+        setNumSet([1]);
+        temp = []
     }
     
     const addSet = () => {
@@ -67,11 +70,6 @@ const WorkoutForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="workout__form">
-            <label>Unit: </label>
-            <select {...register("unit", { required: true })} className="form__input__select">
-                <option value="lb">lb</option>
-                <option value="kg">kg</option> 
-            </select>
             <label>Date of workout: </label>
             <input {...register("date", { required: true })} type="date" className="form__input"/>
             <label>Name of workout: </label>

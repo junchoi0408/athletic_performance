@@ -24,7 +24,7 @@ export const getRecord = async (req: Request, res: Response) => {
             res.status(404).json({ message: error.message });
         }
     }
-    
+
 }
 
 export const createWorkouts = async(req: Request, res: Response) => {
@@ -44,3 +44,24 @@ export const createWorkouts = async(req: Request, res: Response) => {
     }
 }
 
+export const updateWorkout = async (req: Request, res: Response) => {
+    const data = req.body;
+    const { projectedMax, info, comments, date } = data;
+
+    try {
+        const workout = await WorkoutLog.findOne({ date }, (error: any, foundObj: WorkoutLogDocument) => {
+            if (error) {
+                res.status(404).json({ message: error.message });
+            }
+            foundObj.projectedMax = projectedMax;
+            foundObj.info = info;
+            foundObj.comments = comments;
+            foundObj.save();
+        });        
+        res.status(200).json(workout);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+}
