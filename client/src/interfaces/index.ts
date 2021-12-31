@@ -4,14 +4,20 @@ export interface WorkoutInfo {
     weight: Number;
     unit: String;
 }
-
-interface Workout {
+export interface WorkoutLog {
     name: String;
     projectedMax: Number;
     info: WorkoutInfo[];
+    comments?: String;
+    date: Date;
 }
 
-export interface WorkoutLog {
-    workout: Workout;
-    createdAt: Date;
+export interface IWorkoutParams {
+    name: String; 
+    date: Date;
+}
+
+export interface IGraphData {
+    x: number;
+    y: number;
 }

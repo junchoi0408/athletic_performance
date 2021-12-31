@@ -1,37 +1,35 @@
 import mongoose from 'mongoose';
 
-interface workoutInfo {
+interface WorkoutInfo {
     set: Number;
     reps: Number;
     weight: Number;
     unit: String;
 }
 
-interface workout {
-    name: string;
-    info: workoutInfo[];
-}
-
 export interface WorkoutLogDocument extends mongoose.Document {
-    workout: workout[];
     createdAt: Date;
+    name: string;
+    projectedMax: Number;
+    comments?: String;
+    info: WorkoutInfo[];
 }
 
 const workoutSchema = new mongoose.Schema(
     {
-        workouts: [{
-            name: String,
-            info: [
-                {
-                    set: Number,
-                    reps: Number,
-                    weight: Number,
-                    unit: String
-                }
-            ]
-        }],
-        
-        createdAt: {
+      
+        name: String,
+        projectedMax: Number,
+        info: [
+            {
+                set: Number,
+                reps: Number,
+                weight: Number,
+                unit: String
+            }
+        ],
+        comments: String,
+        date: {
             type: Date,
             default: Date.now()
         }

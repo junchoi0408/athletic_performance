@@ -31,19 +31,23 @@
     height: 30px;
     margin: 0.5em 0;
     padding: 0 5px;
+    border: 1px solid #000;
 }
 
 .workout__input {
     width: 50px;
     height: 50px;
-    border: 1px solid #ccc;
+    border: 1px solid #000;
     border-radius: 5px;
 }
 
 .text__input { 
-    width: 250px;
+    width: 252px;
     height: 200px;
     margin: 0.5em 0;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 5px;
 }
 
 .form__input__select {
@@ -51,4 +55,29 @@
     height: 34px;
     margin: 0.5em 0;
     padding: 0 5px;
+    border: 1px solid #000;
+}
+
+.workout__button {
+    width: 264px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.save__button {
+    width: 264px;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    background-color: #000;
+    border: 1px solid #000;
+    border-radius: 3px;
+    cursor: pointer;
 }

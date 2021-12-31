@@ -4,7 +4,6 @@ import WorkoutLog, { WorkoutLogDocument } from '../model/workout';
 export const getWorkouts = async (req: Request, res: Response) => {
     try {
         const workouts = await WorkoutLog.find();
-
         res.status(200).json(workouts);
         
     } catch (error: unknown) {
@@ -12,6 +11,20 @@ export const getWorkouts = async (req: Request, res: Response) => {
             res.status(404).json({ message: error.message });
         }
     }
+}
+
+export const getRecord = async (req: Request, res: Response) => {
+    const { name, date } = req.query;
+ 
+    try { 
+        const workouts = await WorkoutLog.find({ name, date });
+        res.status(200).json(workouts);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+    
 }
 
 export const createWorkouts = async(req: Request, res: Response) => {
@@ -30,3 +43,4 @@ export const createWorkouts = async(req: Request, res: Response) => {
         }
     }
 }
+

@@ -1,47 +1,67 @@
-import React from 'react'
-import { VictoryChart, VictoryLine, VictoryTheme } from 'victory'
-import Navbar from './components/Navbar/Navbar'
-import { useForm } from 'react-hook-form';
-import { WorkoutLog } from './interfaces';
+import React, { useEffect, useState } from 'react';
+import Navbar from './components/Navbar/Navbar';
+import Charts from './components/Charts/Charts';
+import { WorkoutLog, IGraphData } from './interfaces';
 import WorkoutForm from './components/WorkoutForm/WorkoutForm';
+import { fetchWorkout } from './api';
 import './App.css';
 
+
+
 const App = () => {
+    const [graphData, setGraphData] = useState<IGraphData[]>([]);
+    const [minDate, setMinDate] = useState(new Date());
+    const [maxDate, setMaxDate] = useState(new Date());
+    const [minWeight, setMinWeight] = useState<number>(10000);
+    const [maxWeight, setMaxWeight] = useState<number>(0);
 
-    const date = new Date();
-    const formattedDate = date.getMonth();
+    useEffect(() => {
+        fetchData();
+    }, [])
 
+    const fetchData = async () => {
+        const { data } = await fetchWorkout();
+
+        const bench = data.filter((workout: WorkoutLog) => workout.name === 'Bench');
+     
+        const cleanedData = bench.map((workout: WorkoutLog) => {
+            const { date, projectedMax } = workout;
+
+            return {
+                x: new Date(date),
+                y: projectedMax
+            }
+        })
+
+
+        cleanedData.sort((a: IGraphData, b:IGraphData) => {
+            return a.x - b.x
+        })
+
+        const weightData = cleanedData.sort((a: IGraphData, b:IGraphData) => {
+            return a.y - b.y
+        })
+
+        const newMinWeight = weightData[0].y
+        const newMaxWeight = weightData[cleanedData.length-1].y
+
+        setMinWeight(newMinWeight);
+        setMaxWeight(newMaxWeight);
+        
+        const minDate = cleanedData[0].x
+        const maxDate = cleanedData[cleanedData.length-1].x
+
+        setMinDate(minDate);
+        setMaxDate(maxDate);
+
+        setGraphData(cleanedData);
+    }
 
     return (
         <>
             <Navbar /> 
             <div className="app">
-                
-                <div className="chart__container">
-                    <VictoryChart theme={VictoryTheme.material} >
-                        <VictoryLine
-                            style={{
-                                data: { stroke: "#c43a31" },
-                                parent: { border: "1px solid #ccc"}
-                            }}
-                            data={[
-                                { x: formattedDate-11, y: 1 },
-                                { x: formattedDate-10, y: 2 },
-                                { x: formattedDate-9, y: 4 },
-                                { x: formattedDate-8, y: 3 },
-                                { x: formattedDate-7, y: 6 },
-                                { x: formattedDate-6, y: 7 },
-                                { x: formattedDate-5, y: 100 },
-                                { x: formattedDate-4, y: 4 },
-                                { x: formattedDate-3, y: 5 },
-                                { x: formattedDate-2, y: 2 },
-                                { x: formattedDate-1, y: 5 },
-                                { x: formattedDate, y: 4 },
-                                { x: formattedDate+1, y: 7 }
-                            ]}
-                        />
-                        </VictoryChart>
-                </div>
+                <Charts minDate={minDate} maxDate={maxDate} minWeight={minWeight} maxWeight={maxWeight} graphData={graphData}/>
                 <WorkoutForm />
             </div>
         </>

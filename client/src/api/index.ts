@@ -1,7 +1,20 @@
 import axios from 'axios';
-import { WorkoutLog } from '../interfaces';
+import { WorkoutLog, IWorkoutParams } from '../interfaces';
 
 const url = 'http://localhost:5000/workout';
 
-export const fetchWorkout = async () => axios.get(url);
-export const createWork = (newWorkout:WorkoutLog) => axios.post(url, newWorkout);
+export const fetchWorkout = () => axios.get(url);
+export const checkRecord = (record: IWorkoutParams) => {
+    const { name, date } = record;
+
+    return axios.get(url+'/record', { params: { name, date } });
+}
+
+export const createWorkout = (newWorkout:WorkoutLog) => {
+    try {
+        axios.post(url, newWorkout)
+    }
+    catch(error: any) {
+        console.log(error.message);
+    }
+}
