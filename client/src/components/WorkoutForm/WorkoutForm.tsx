@@ -6,7 +6,11 @@ import { createWorkout, checkRecord, updateWorkout } from '../../api';
 import toast, { Toaster } from 'react-hot-toast';
 import './WorkoutForm.css'
 
-const WorkoutForm = () => {
+interface Props {
+    fetchData: any;
+}
+
+const WorkoutForm = (props: Props) => {
     const [numSet, setNumSet] = useState([1]);
     const { register, handleSubmit, reset } = useForm();
 
@@ -50,14 +54,16 @@ const WorkoutForm = () => {
                 }
             } else { 
                 createWorkout(newData);
+                
                 toast.success('Saved Successfully');
             }
         } catch (error: any) {
             toast.error('Something went wrong');
+            console.log(error.message)
         }
         reset();
         setNumSet([1]);
-        temp = []
+        temp = [];
     }
     
     const addSet = () => {
@@ -96,13 +102,12 @@ const WorkoutForm = () => {
                             </div>
                             <AiOutlineClose style={{marginTop: "1.5em", color: 'red', cursor: "pointer"}} onClick={deleteSet}/>
                         </div>
-
                     )
                 })
             }
             <button className="workout__button" style={{margin: "1em 0"}} type="button" onClick={addSet}><AiOutlinePlusCircle size="1.5em"/> <span style={{width: "100%"}}>Add Set</span></button>
             <textarea {...register("comments")} placeholder="Comments" className="text__input"/>
-            <button type="submit" className="save__button">Save Workout</button>
+            <button onClick={() => props.fetchData()} type="submit" className="save__button">Save Workout</button>
             <Toaster /> 
         </form>
     )

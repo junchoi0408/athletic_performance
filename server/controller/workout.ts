@@ -65,3 +65,18 @@ export const updateWorkout = async (req: Request, res: Response) => {
         }
     }
 }
+
+export const deleteWorkout = async (req: Request, res: Response) => {
+    const { date, name } = req.body;
+
+    try { 
+        const workouts = await WorkoutLog.findOneAndDelete({ name, date });
+
+        res.status(200).json(workouts);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+   
+}

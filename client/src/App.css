@@ -18,3 +18,19 @@
     align-items: center;
     justify-content: center;
 }
+
+.history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+}
+
+.raw__data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+}

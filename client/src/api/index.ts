@@ -12,7 +12,7 @@ export const checkRecord = (record: IWorkoutParams) => {
 
 export const createWorkout = (newWorkout:WorkoutLog) => {
     try {
-        axios.post(url, newWorkout)
+        return axios.post(url, newWorkout)
     }
     catch(error: any) {
         console.log(error.message);
@@ -21,7 +21,15 @@ export const createWorkout = (newWorkout:WorkoutLog) => {
 
 export const updateWorkout = (newWorkout: WorkoutLog) => {
     try {
-        axios.put(url, newWorkout);
+        return axios.put(url, newWorkout);
+    } catch(error: any) {
+        console.log(error.message);
+    }
+}
+
+export const deleteWorkout = (date: Date, name: String) => {
+    try {
+        return axios.delete(url, { data: { date, name } });
     } catch(error: any) {
         console.log(error.message);
     }
