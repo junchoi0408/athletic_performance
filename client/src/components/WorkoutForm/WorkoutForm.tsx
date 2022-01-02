@@ -39,7 +39,6 @@ const WorkoutForm = (props: Props) => {
             comments,
             info: temp,
         };
-        
 
         try { 
             const { data } = await checkRecord({ name, date });
@@ -54,7 +53,6 @@ const WorkoutForm = (props: Props) => {
                 }
             } else { 
                 createWorkout(newData);
-                
                 toast.success('Saved Successfully');
             }
         } catch (error: any) {
@@ -64,6 +62,7 @@ const WorkoutForm = (props: Props) => {
         reset();
         setNumSet([1]);
         temp = [];
+        await props.fetchData();
     }
     
     const addSet = () => {
@@ -100,7 +99,7 @@ const WorkoutForm = (props: Props) => {
                                 <label style={{marginBottom: "0.5em"}}>Reps: </label>
                                 <input className="workout__input" {...register(`workoutReps${set}`, { required: true })} type="text" />
                             </div>
-                            <AiOutlineClose style={{marginTop: "1.5em", color: 'red', cursor: "pointer"}} onClick={deleteSet}/>
+                            <AiOutlineClose style={{marginTop: "1.5em", color: 'red', cursor: "pointer"}} onClick={() => deleteSet()}/>
                         </div>
                     )
                 })

@@ -85,43 +85,6 @@ const App = () => {
         }
     }
 
-    // const updateData = (data: WorkoutLog) => {
-    //     const newData = [...fetchedRawData, data ];
-    //     const fetchedData = newData.filter((workout: WorkoutLog) => workout.name === workoutChoice);
-    //     setFetchedRawData(fetchedData);
-        
-    //     const cleanedData = fetchedRawData.map((workout: WorkoutLog) => {
-    //         const { date, projectedMax } = workout;
-
-    //         return {
-    //             x: new Date(date).getTime(),
-    //             y: projectedMax
-    //         }
-    //     })
-
-    //     cleanedData.sort((a: IGraphData, b:IGraphData) => {
-    //         return a.x - b.x
-    //     })
-
-    //     const weightData = cleanedData.sort((a: IGraphData, b:IGraphData) => {
-    //         return a.y - b.y
-    //     })
-
-    //     const newMinWeight = weightData[0].y;
-    //     const newMaxWeight = weightData[cleanedData.length-1].y;
-
-    //     setMinWeight(newMinWeight);
-    //     setMaxWeight(newMaxWeight);
-
-    //     const minDate = cleanedData[0].x
-    //     const maxDate = cleanedData[cleanedData.length-1].x
-
-    //     setMinDate(new Date(minDate));
-    //     setMaxDate(new Date(maxDate));
-
-    //     setGraphData(cleanedData);
-    // }
-
     return (
         <>
             <Navbar /> 
